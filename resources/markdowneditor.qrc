@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>default.md</file>
+        <file>index.html</file>
+        <file>js/highlight.pack.js</file>
+        <file>js/jquery-3.3.1.min.js</file>
+        <file>js/marked.min.js</file>
+        <file>css/github-markdown.css</file>
+        <file>css/highlight_styles/github-gist.css</file>
+        <file>images/about.png</file>
+        <file>images/close.png</file>
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/find.png</file>
+        <file>images/new.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/save.png</file>
+        <file>images/saveAs.png</file>
+        <file>images/markdowneditor.png</file>
+    </qresource>
+</RCC>

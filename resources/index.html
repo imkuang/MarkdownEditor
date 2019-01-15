@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" href="css/github-markdown.css">
+  <link rel="stylesheet" href="css/highlight_styles/github-gist.css">
+  <script src="js/marked.min.js"></script>
+  <script src="js/highlight.pack.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="qrc:/qtwebchannel/qwebchannel.js"></script>
+</head>
+<body>
+  <div id="display" class="markdown-body"></div>
+  <script>
+  var display = document.getElementById('display');
+
+  var updateText = function(text) {
+      display.innerHTML = marked(text);
+      $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      });
+  }
+
+  new QWebChannel(qt.webChannelTransport,
+    function(channel) {
+      var content = channel.objects.content;
+      updateText(content.text);
+      content.textChanged.connect(updateText);
+    }
+  );
+  </script>
+</body>
+</html>
