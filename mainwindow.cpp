@@ -118,11 +118,10 @@ void MainWindow::close()
 
 void MainWindow::about()
 {
-    QMessageBox aboutBox(this);
-    aboutBox.setWindowTitle(tr("Markdown Editor")+tr(" v1.0"));
-    aboutBox.setIcon(QMessageBox::Information);
-    aboutBox.setText(tr("A simple markdown editor,writen by Xiri."));
-    aboutBox.exec();
+    QMessageBox::about(this, tr("Markdown Editor v1.0"),
+             tr("This application is a simple markdown editor.<br />"
+                "You can use it to write markdown documents, and preview at any time.<br />"
+                "The source code can be found on <a href=\"https://github.com/xirikm/markdownEditor/\">github</a>"));
 }
 
 void MainWindow::find()
@@ -218,7 +217,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
     if (curFile.isEmpty()) //fileName为空时设置默认文件名
     {
-        curFile = tr("untitled");
+        curFile = tr("untitled.md");
         isUntitled=true; //此时没有与编辑器内内容对应的文件
     }
     setWindowFilePath(curFile);
@@ -228,37 +227,30 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::createActions()
 {
+    //File菜单栏
     QMenu *fileMenu = menuBar()->addMenu(tr("File(&F)"));
-//    QToolBar *fileToolBar = addToolBar(tr("File"));
 
-    const QIcon newIcon = QIcon::fromTheme("document-new",QIcon(":/images/new.png"));
-    QAction *newAct = new QAction(newIcon, tr("New(&N)"), this);
+    QAction *newAct = new QAction(tr("New(&N)"), this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip(tr("Create a new file"));
     connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
     fileMenu->addAction(newAct);
-//    fileToolBar->addAction(newAct);
 
-    const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
-    QAction *openAct = new QAction(openIcon, tr("Open(&O)"), this);
+    QAction *openAct = new QAction(tr("Open(&O)"), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
     connect(openAct, &QAction::triggered, this, &MainWindow::open);
     fileMenu->addAction(openAct);
-//    fileToolBar->addAction(openAct);
 
     fileMenu->addSeparator();
 
-    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/images/save.png"));
-    QAction *saveAct = new QAction(saveIcon, tr("Save(&S)"), this);
+    QAction *saveAct = new QAction(tr("Save(&S)"), this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip(tr("Save the document to disk"));
     connect(saveAct, &QAction::triggered, this, &MainWindow::save);
     fileMenu->addAction(saveAct);
-//    fileToolBar->addAction(saveAct);
 
-    const QIcon saveAsIcon = QIcon::fromTheme("document-save-as", QIcon(":/images/saveAs.png"));
-    QAction *saveAsAct = new QAction(saveAsIcon, tr("Save As(&A)"), this);
+    QAction *saveAsAct = new QAction(tr("Save As(&A)"), this);
     saveAsAct->setShortcuts(QKeySequence::SaveAs);
     saveAsAct->setStatusTip(tr("Save the document under a new name"));
     connect(saveAsAct, &QAction::triggered, this, &MainWindow::saveAs);
@@ -266,64 +258,76 @@ void MainWindow::createActions()
 
     fileMenu->addSeparator();
 
-    const QIcon exitIcon = QIcon::fromTheme("application-exit", QIcon(":/images/close.png"));
-    QAction *exitAct = new QAction(exitIcon, tr("Exit(&Q)"), this);
+    QAction *exitAct = new QAction(tr("Exit(&Q)"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip(tr("Exit the application"));
     connect(exitAct, &QAction::triggered, this, &MainWindow::close);
     fileMenu->addAction(exitAct);
 
-
+    //Edit菜单栏
     QMenu *editMenu = menuBar()->addMenu(tr("Edit(&E)"));
-//    QToolBar *editToolBar = addToolBar(tr("Edit"));
 
-    const QIcon cutIcon = QIcon::fromTheme("edit-cut", QIcon(":/images/cut.png"));
-    QAction *cutAct = new QAction(cutIcon, tr("Cut(&X)"),this);
+    QAction *undoAct = new QAction(tr("Undo(&Z)"),this);
+    undoAct->setShortcuts(QKeySequence::Undo);
+    undoAct->setStatusTip(tr("Undo the last operation"));
+    connect(undoAct, &QAction::triggered, textEditor, &QPlainTextEdit::undo);
+    editMenu->addAction(undoAct);
+
+    QAction *redoAct = new QAction(tr("Redo(&Y)"),this);
+    redoAct->setShortcuts(QKeySequence::Redo);
+    redoAct->setStatusTip(tr("Redo the last operation"));
+    connect(redoAct, &QAction::triggered, textEditor, &QPlainTextEdit::redo);
+    editMenu->addAction(redoAct);
+
+    editMenu->addSeparator();
+
+    QAction *cutAct = new QAction(tr("Cut(&X)"),this);
     cutAct->setShortcuts(QKeySequence::Cut);
     cutAct->setStatusTip(tr("Cut the current selection's contents to the clipboard"));
     connect(cutAct, &QAction::triggered, textEditor, &QPlainTextEdit::cut);
     editMenu->addAction(cutAct);
-//    editToolBar->addAction(cutAct);
 
-    const QIcon copyIcon = QIcon::fromTheme("edit-copy", QIcon(":/images/copy.png"));
-    QAction *copyAct = new QAction(copyIcon,tr("Copy(&C)"), this);
+    QAction *copyAct = new QAction(tr("Copy(&C)"), this);
     copyAct->setShortcuts(QKeySequence::Copy);
     copyAct->setStatusTip(tr("Copy the current selection's contents to the clipboard"));
     connect(copyAct, &QAction::triggered, textEditor, &QPlainTextEdit::copy);
     editMenu->addAction(copyAct);
-//    editToolBar->addAction(copyAct);
 
-    const QIcon pasteIcon = QIcon::fromTheme("edit-paste", QIcon(":/images/paste.png"));
-    QAction *pasteAct = new QAction(pasteIcon, tr("Paste(&V)"), this);
+    QAction *pasteAct = new QAction(tr("Paste(&V)"), this);
     pasteAct->setShortcuts(QKeySequence::Paste);
     pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current selection"));
     connect(pasteAct, &QAction::triggered, textEditor, &QPlainTextEdit::paste);
     editMenu->addAction(pasteAct);
-//    editToolBar->addAction(pasteAct);
 
     editMenu->addSeparator();
 
-    const QIcon findIcon = QIcon::fromTheme("edit-find", QIcon(":/images/find.png"));
-    QAction *findAct = new QAction(findIcon, tr("Find(&F)"), this);
+    QAction *findAct = new QAction(tr("Find(&F)"), this);
     findAct->setShortcuts(QKeySequence::Find);
     findAct->setStatusTip(tr("Find text from the the document"));
     connect(findAct, &QAction::triggered, this, &MainWindow::find);
     editMenu->addAction(findAct);
-//    editToolBar->addAction(findAct);
 
-
+    //初始化Edit菜单栏中一些动作的状态
     cutAct->setEnabled(false);
     copyAct->setEnabled(false);
+    undoAct->setEnabled(false);
+    redoAct->setEnabled(false);
     connect(textEditor, &QPlainTextEdit::copyAvailable, cutAct, &QAction::setEnabled);
     connect(textEditor, &QPlainTextEdit::copyAvailable, copyAct, &QAction::setEnabled);
+    connect(textEditor, &QPlainTextEdit::undoAvailable, undoAct, &QAction::setEnabled);
+    connect(textEditor, &QPlainTextEdit::redoAvailable, redoAct, &QAction::setEnabled);
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help(&H)"));
 
-    const QIcon aboutIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-    QAction *aboutAct = new QAction(aboutIcon,tr("About"), this);
+    QAction *aboutAct = new QAction(tr("About"), this);
     aboutAct->setStatusTip(tr("About this editor"));
     connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
     helpMenu->addAction(aboutAct);
+
+    QAction *aboutQtAct = new QAction(tr("About Qt"), this);
+    aboutQtAct->setStatusTip(tr("About Qt"));
+    connect(aboutQtAct, &QAction::triggered, qApp, &QApplication::aboutQt);
+    helpMenu->addAction(aboutQtAct);
 }
 
 void MainWindow::createStatusBar()
