@@ -7,6 +7,6 @@
         <file>js/marked.min.js</file>
         <file>css/github-markdown.css</file>
         <file>css/highlight_styles/github-gist.css</file>
-        <file>images/markdowneditor.png</file>
+        <file>images/markdown.png</file>
     </qresource>
 </RCC>

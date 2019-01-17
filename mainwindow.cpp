@@ -6,7 +6,7 @@
 MainWindow::MainWindow()
     : textEditor(new QPlainTextEdit), contentPreview(new QWebEngineView)
 {
-    setWindowIcon(QIcon(":/images/markdowneditor.png"));
+    setWindowIcon(QIcon(":/images/markdown.png"));
 //    textEditor->setFont(QFont("Microsoft YaHei",10));
     textEditor->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     textEditor->setStyleSheet("selection-background-color: DodgerBlue;"
@@ -46,7 +46,8 @@ MainWindow::MainWindow()
     findDlg=new QDialog(this);
     findDlg->setWindowTitle(tr("Find"));
     findLineEdit=new QLineEdit(findDlg);
-    findLineEdit->setFont(QFont("微软雅黑",10));
+//    findLineEdit->setFont(QFont("微软雅黑",10));
+    findLineEdit->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     QPushButton *nextBtn= new QPushButton(tr("Find Next"), findDlg);
     QVBoxLayout *findLayout= new QVBoxLayout(findDlg);
     findLayout->addWidget(findLineEdit);
@@ -119,9 +120,9 @@ void MainWindow::close()
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("Markdown Editor v1.0"),
-             tr("This application is a simple markdown editor.<br />"
-                "You can use it to write markdown documents, and preview at any time.<br />"
-                "The source code can be found on <a href=\"https://github.com/xirikm/markdownEditor/\">github</a>"));
+             tr("This application is a simple markdown editor.<br /><br />"
+                "You can use it to write markdown documents, and preview at any time.<br /><br />"
+                "Open source under the MIT license, and the source code can be found on <a href=\"https://github.com/xirikm/markdownEditor/\">Github</a>"));
 }
 
 void MainWindow::find()
@@ -337,8 +338,8 @@ void MainWindow::createStatusBar()
 
 void MainWindow::writeSettings()
 {
-//    QSettings settings(QCoreApplication::applicationName());
-//    settings.setValue("geometry", saveGeometry());
+    QSettings settings(QCoreApplication::applicationName());
+    settings.setValue("geometry", saveGeometry());
 }
 
 void MainWindow::readSettings()
