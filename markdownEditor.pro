@@ -48,4 +48,7 @@ DISTFILES += \
     resources/license/markedjs_LICENSE.md \
     resources/license/github-markdown-css_LICENSE.txt \
     resources/license/highlightjs_LICENSE.txt \
-    resources/license/jquery_LICENSE.txt
+    resources/license/jquery_LICENSE.txt \
+    resources/i18n/zh_CN.ts
+
+TRANSLATIONS += ./resources/i18n/zh_CN.ts
