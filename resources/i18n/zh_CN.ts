@@ -56,7 +56,8 @@
         <location filename="../../mainwindow.cpp" line="151"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>无法打开文件 %1：\n %2。</translation>
+        <translation>无法打开文件 %1：
+%2。</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="163"/>
@@ -67,7 +68,8 @@
         <location filename="../../mainwindow.cpp" line="172"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>无法写入文件 %1：\n %2。</translation>
+        <translation>无法写入文件 %1：
+%2。</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="185"/>
@@ -78,7 +80,7 @@
         <location filename="../../mainwindow.cpp" line="197"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
-        <translation>当前文档已经发生改变。\n
+        <translation>当前文档已经发生改变。
 你想要保存这些改变吗？</translation>
     </message>
     <message>

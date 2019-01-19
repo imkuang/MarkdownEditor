@@ -7,6 +7,8 @@
 QT       += core gui
 QT += webenginewidgets webchannel
 
+TRANSLATIONS += ./resources/i18n/zh_CN.ts
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = markdownEditor
@@ -41,9 +43,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES += \
-    resources/markdowneditor.qrc
-
 DISTFILES += \
     resources/license/markedjs_LICENSE.md \
     resources/license/github-markdown-css_LICENSE.txt \
@@ -51,4 +50,5 @@ DISTFILES += \
     resources/license/jquery_LICENSE.txt \
     resources/i18n/zh_CN.ts
 
-TRANSLATIONS += ./resources/i18n/zh_CN.ts
+RESOURCES += \
+    resources/markdowneditor.qrc

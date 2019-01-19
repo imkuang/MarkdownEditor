@@ -2,12 +2,12 @@
     <qresource prefix="/">
         <file>default.md</file>
         <file>index.html</file>
-        <file>js/highlight.pack.js</file>
-        <file>js/jquery-3.3.1.min.js</file>
-        <file>js/marked.min.js</file>
+        <file>i18n/zh_CN.qm</file>
         <file>css/github-markdown.css</file>
         <file>css/highlight_styles/github-gist.css</file>
         <file>images/markdown.png</file>
-        <file>i18n/zh_CN.qm</file>
+        <file>js/highlight.pack.js</file>
+        <file>js/jquery-3.3.1.min.js</file>
+        <file>js/marked.min.js</file>
     </qresource>
 </RCC>
